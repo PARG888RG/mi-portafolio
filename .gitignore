@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Node Modules
+node_modules/
+
+# Contraseñas de entorno
+
+.env 
+.env.local
+
+# Archivos de compilación
+dist
+build
+
+dist/
+build/
+
+# Archivos temporales
+Thumbs.db
+
