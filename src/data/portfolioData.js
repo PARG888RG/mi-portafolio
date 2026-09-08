@@ -4,7 +4,8 @@ export const personalInfo = {
   about: "Desarrollador enfocado en construir interfaces funcionales, limpias y eficientes. Me apasiona el desarrollo web moderno, la arquitectura de software y la seguridad informática.",
   github: "https://github.com/PARG888RG",
   email: "pablitorodas2008@gmail.com",
-  githubUser: "PARG888RG"
+  githubUser: "PARG888RG",
+  linkedin: "https://linkedin.com"
 };
 
 export const projectsData = [
@@ -20,15 +21,34 @@ export const projectsData = [
     id: 2,
     title: "SwapTune",
     description: "Aplicación web para descubrir nuevas canciones en función de gustos",
-    tags: ["JavaScript", "MongoDB Atlas", "HTML", "CSS"],
+    tags: ["JavaScript", "MongoDB Atlas", "HTML", "CSS", "UX Design"],
     githubUrl: "https://github.com/PARG888RG/Proyecto-web-Juventud-2025"
+  },
+  {
+    id: 3,
+    title: "Medi Llegadas Backend",
+    description: "Sistema de registro de asistencia mediante código QR",
+    tags: ["JavaScript", "Firebase"],
+    githubUrl: "https://github.com/PARG888RG/Medi-Llegadas-Backend"
   }
 ];
 
 
 export const skillsData = [
-  { category: "Front-End", skills: ["React", "JavaScript", "HTML5", "CSS3 / Tailwind"] },
-  { category: "Diseño & UX", skills: ["Figma", "Design Systems", "UI/UX Design"] },
-  { category: "Backend & DB", skills: ["Firebase", "MongoDB", "MySQL"] },
-  { category: "Herramientas", skills: ["Git / GitHub", "Google Cloud", "n8n"] },
+  {
+    category: "Infraestructura & Seguridad",
+    skills: ["Linux / Bash", "Git / Github", "Redes", "WebSec"]
+  },
+  {
+    category: "Backend",
+    skills: ["Node.js", "MySQL", "Firebase"]
+  },
+  {
+    category: "Desarrollo",
+    skills: ["JavaScript", "C#", "Java", "React", "HTML5 / CSS3", "Python"]
+  },
+  {
+    category: "Diseño",
+    skills: ["Figma", "UI/UX Design", "Design Systems"]
+  }
 ];

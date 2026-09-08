@@ -1,20 +1,20 @@
+import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
+import AboutMe from './components/AboutMe';
 import Projects from './components/Projects';
+import About from './components/About';
 import Contact from './components/Contact';
-import ThemeToggle from './components/themeToggle';
 
 export default function App() {
   return (
     <div className="bg-[var(--bg-main)] text-[var(--text-main)] min-h-screen font-sans transition-colors duration-300 relative">
-      <header className="fixed top-4 right-6 z-50">
-        <ThemeToggle />
-      </header>
+      <Navbar />
 
       <main>
         <Hero />
-        <About />
+        <AboutMe />
         <Projects />
+        <About />
         <Contact />
       </main>
     </div>
