@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #0D7A78;   /* Cyan accesible para texto claro (Ratio 5.2:1) */
+  --color-brand-accent: #D03B13;    /* Naranja accesible (Ratio 4.8:1) */
+  --color-brand-dark: #121417;
+}
+
+/* Modo Claro Amigable con la Vista */
+:root {
+  --bg-main: #F3F4F6;               /* Gris suave, reduce deslumbramiento */
+  --bg-card: #FFFFFF;
+  --text-main: #111827;             /* Negro verdadero para contraste 16:1 */
+  --text-muted: #4B5563;           /* Contraste 7:1 en WCAG */
+  --border-color: #D1D5DB;
+  
+  /* Colores de acento accesibles sobre blanco */
+  --badge-bg: #E6F4F4;
+  --badge-text: #08605F;
+  --badge-border: #99D5D3;
+}
+
+/* Modo Oscuro */
+html.dark {
+  --bg-main: #0F1115;
+  --bg-card: #1B1E24;
+  --text-main: #F9FAFB;
+  --text-muted: #9CA3AF;
+  --border-color: #374151;
+
+  --badge-bg: rgba(43, 207, 206, 0.15);
+  --badge-text: #2BCFCE;
+  --badge-border: rgba(43, 207, 206, 0.3);
+}
