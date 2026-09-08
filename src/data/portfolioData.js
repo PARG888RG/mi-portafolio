@@ -3,7 +3,8 @@ export const personalInfo = {
   role: "Desarrollador Frontend & Estudiante de Ciberseguridad",
   about: "Desarrollador enfocado en construir interfaces funcionales, limpias y eficientes. Me apasiona el desarrollo web moderno, la arquitectura de software y la seguridad informática.",
   github: "https://github.com/PARG888RG",
-  email: "pablitorodas2008@gmail.com"
+  email: "pablitorodas2008@gmail.com",
+  githubUser: "PARG888RG"
 };
 
 export const projectsData = [
