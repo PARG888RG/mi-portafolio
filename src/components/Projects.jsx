@@ -39,7 +39,7 @@ export default function Projects() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="mb-14 text-center"
       >
-        <span className="text-xs font-bold tracking-wider uppercase px-4 py-1.5 rounded-full bg-[var(--badge-bg)]/80 text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block backdrop-blur-md">
+        <span className="text-xs font-bold tracking-wider uppercase px-4 py-1.5 rounded-full bg-[var(--badge-bg)] text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block backdrop-blur-md">
           Mi Trabajo
         </span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-4">
@@ -50,14 +50,11 @@ export default function Projects() {
         </p>
       </motion.div>
 
-      {/* Contenedor del Carrusel 3D / Cover Flow */}
+      {/* Carrusel */}
       <div className="relative flex flex-col items-center">
-        
-        {/* Pista de tarjetas */}
         <div className="relative w-full h-[450px] sm:h-[430px] flex items-center justify-center">
           {projectsData.map((project, index) => {
             let offset = index - currentIndex;
-
             const total = projectsData.length;
             if (offset > total / 2) offset -= total;
             if (offset < -total / 2) offset += total;
@@ -89,25 +86,16 @@ export default function Projects() {
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 onClick={() => setCurrentIndex(index)}
-                /* 
-                  - Glassmorphism aplicado:
-                    bg-white/10 (o bg-black/20 en dark), backdrop-blur-2xl, border-white/20, shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
-                */
                 className={`absolute w-[310px] sm:w-[360px] h-[390px] sm:h-[400px] 
-                  bg-white/10 dark:bg-white/5 
-                  backdrop-blur-2xl 
-                  border border-white/20 dark:border-white/10 
-                  ring-1 ring-white/10 
-                  rounded-3xl p-6 sm:p-7 
+                  glass-card rounded-3xl p-6 sm:p-7 
                   flex flex-col justify-between 
-                  shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] 
                   transition-all duration-300 select-none ${
                   isCenter 
-                    ? 'cursor-default border-white/40 dark:border-white/30 shadow-[0_12px_40px_0_rgba(0,0,0,0.45)]' 
-                    : 'cursor-pointer hover:border-white/30 hover:bg-white/15'
+                    ? 'cursor-default border-[var(--badge-border)]' 
+                    : 'cursor-pointer hover:border-white/30'
                 }`}
               >
-                {/* Bloque Superior: Título y Descripción */}
+                {/* Bloque Superior */}
                 <div className="flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-3 gap-2">
                     <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] leading-tight">
@@ -125,13 +113,13 @@ export default function Projects() {
                   </p>
                 </div>
 
-                {/* Bloque Inferior: Tags y Links fijados al final */}
+                {/* Bloque Inferior */}
                 <div className="mt-auto pt-4">
                   <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5">
                     {project.tags.map((tag, idx) => (
                       <span 
                         key={idx} 
-                        className="inline-flex items-center text-[11px] font-semibold px-2.5 py-1 bg-white/10 dark:bg-white/5 text-[var(--badge-text)] rounded-lg border border-white/10 backdrop-blur-md"
+                        className="inline-flex items-center text-[11px] font-semibold px-2.5 py-1 bg-[var(--badge-bg)] text-[var(--badge-text)] rounded-lg border border-[var(--badge-border)] backdrop-blur-md"
                       >
                         <img 
                           src={getTagIconUrl(tag)} 
@@ -143,7 +131,7 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-5 pt-3.5 border-t border-white/10 dark:border-white/10">
+                  <div className="flex items-center gap-5 pt-3.5 border-t border-[var(--border-color)]">
                     {project.githubUrl && (
                       <a 
                         href={project.githubUrl} 
@@ -174,12 +162,12 @@ export default function Projects() {
           })}
         </div>
 
-        {/* Controles de Navegación con efecto Glass */}
+        {/* Controles de Navegación */}
         <div className="flex items-center justify-between w-full max-w-xs mt-6 z-40">
           <button
             onClick={handlePrev}
             aria-label="Proyecto anterior"
-            className="w-10 h-10 rounded-full border border-white/20 dark:border-white/10 bg-white/10 dark:bg-white/5 backdrop-blur-md text-[var(--text-main)] flex items-center justify-center hover:border-[#D03B13] hover:text-[#D03B13] transition-colors shadow-md active:scale-95"
+            className="w-10 h-10 rounded-full glass-card text-[var(--text-main)] flex items-center justify-center hover:border-[#D03B13] hover:text-[#D03B13] transition-colors shadow-md active:scale-95"
           >
             ←
           </button>
@@ -202,7 +190,7 @@ export default function Projects() {
           <button
             onClick={handleNext}
             aria-label="Proyecto siguiente"
-            className="w-10 h-10 rounded-full border border-white/20 dark:border-white/10 bg-white/10 dark:bg-white/5 backdrop-blur-md text-[var(--text-main)] flex items-center justify-center hover:border-[#D03B13] hover:text-[#D03B13] transition-colors shadow-md active:scale-95"
+            className="w-10 h-10 rounded-full glass-card text-[var(--text-main)] flex items-center justify-center hover:border-[#D03B13] hover:text-[#D03B13] transition-colors shadow-md active:scale-95"
           >
             →
           </button>

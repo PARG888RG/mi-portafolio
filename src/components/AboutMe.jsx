@@ -46,7 +46,7 @@ export default function AboutMe() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="mb-16 text-center"
       >
-        <span className="text-xs font-bold tracking-wider uppercase px-4 py-1.5 rounded-full bg-[var(--badge-bg)]/80 backdrop-blur-md text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block shadow-xs">
+        <span className="text-xs font-bold tracking-wider uppercase px-4 py-1.5 rounded-full bg-[var(--badge-bg)] text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block shadow-xs backdrop-blur-md">
           Conóceme
         </span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-4">
@@ -57,7 +57,7 @@ export default function AboutMe() {
         </p>
       </motion.div>
 
-      {/* Tarjetas integradas con Glassmorphism y compatibilidad en modo claro */}
+      {/* Tarjetas integradas con la clase global glass-card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
         {/* Texto Biográfico */}
@@ -66,7 +66,7 @@ export default function AboutMe() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 bg-[var(--bg-card)]/40 dark:bg-[var(--bg-card)]/50 backdrop-blur-xl border border-white/20 dark:border-white/10 ring-1 ring-black/5 dark:ring-white/5 rounded-2xl p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col justify-between h-full hover:border-[#D03B13]/30 transition-all duration-300"
+          className="lg:col-span-6 glass-card glass-card-hover rounded-2xl p-8 flex flex-col justify-between h-full"
         >
           <div>
             <h3 className="text-2xl font-bold text-[var(--text-main)] mb-4">
@@ -83,7 +83,7 @@ export default function AboutMe() {
             </p>
           </div>
 
-          <div className="pt-6 border-t border-[var(--border-color)]/50 flex flex-wrap gap-4 items-center justify-between">
+          <div className="pt-6 border-t border-[var(--border-color)] flex flex-wrap gap-4 items-center justify-between">
             <span className="text-xs font-mono font-bold text-[#D03B13] uppercase tracking-wider">
               Disponible para proyectos & colaboraciones
             </span>
@@ -96,7 +96,7 @@ export default function AboutMe() {
           </div>
         </motion.div>
 
-        {/* Tarjetas de Pilares / Aptitudes */}
+        {/* Tarjetas de Pilares */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -107,9 +107,9 @@ export default function AboutMe() {
           {highlights.map((item, idx) => (
             <div 
               key={idx}
-              className="bg-[var(--bg-card)]/40 dark:bg-[var(--bg-card)]/50 backdrop-blur-xl border border-white/20 dark:border-white/10 ring-1 ring-black/5 dark:ring-white/5 rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.25)] flex items-start gap-4 hover:border-white/40 dark:hover:border-white/20 transition-all duration-300 group"
+              className="glass-card glass-card-hover rounded-2xl p-6 flex items-start gap-4 group"
             >
-              <span className="p-3 rounded-xl bg-[var(--badge-bg)]/60 backdrop-blur-md border border-[var(--badge-border)] shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+              <span className="p-3 rounded-xl bg-[var(--badge-bg)] border border-[var(--badge-border)] shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 {item.icon}
               </span>
               <div>

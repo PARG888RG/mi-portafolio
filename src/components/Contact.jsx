@@ -22,7 +22,7 @@ export default function Contact() {
         </h2>
       </motion.div>
 
-      {/* Grid a 2 columnas */}
+      {/* Grid a 2 columnas con glass-card */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Columna Correo */}
@@ -32,7 +32,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
           whileHover={{ y: -4 }}
-          className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 flex items-center justify-between shadow-sm hover:border-[var(--badge-border)] will-change-transform"
+          className="glass-card rounded-2xl p-6 flex items-center justify-between hover:border-[var(--badge-border)] will-change-transform"
         >
           <div className="pr-4">
             <span className="text-xs font-bold uppercase text-[var(--badge-text)] tracking-wider">Correo Electrónico</span>
@@ -60,7 +60,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 1, 0.5, 1] }}
           whileHover={{ y: -4 }}
-          className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 flex items-center justify-between shadow-sm hover:border-[var(--badge-border)] will-change-transform"
+          className="glass-card rounded-2xl p-6 flex items-center justify-between hover:border-[var(--badge-border)] will-change-transform"
         >
           <div className="pr-4">
             <span className="text-xs font-bold uppercase text-[var(--badge-text)] tracking-wider">GitHub</span>
@@ -77,7 +77,6 @@ export default function Contact() {
             title="Ver Perfil de GitHub"
             className="w-14 h-14 rounded-full bg-[var(--bg-main)] border border-[var(--border-color)] hover:border-[#D03B13] flex items-center justify-center shrink-0 shadow-xs transition-transform duration-200 hover:scale-105 group text-[var(--text-main)]"
           >
-            {/* SVG Inline adaptativo para modo claro y oscuro */}
             <svg 
               className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" 
               viewBox="0 0 24 24"
