@@ -5,31 +5,40 @@ export default function AboutMe() {
     {
       title: "Diseño UI/UX",
       desc: "Investigación, prototipado y diseño de interfaces enfocadas en crear experiencias claras, intuitivas y fáciles de utilizar.",
-      icon: "🎨"
+      icon: (
+        <svg className="w-6 h-6 stroke-[#D03B13]" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="9" y1="21" x2="9" />
+        </svg>
+      )
     },
     {
       title: "Desarrollo Web",
       desc: "Desarrollo de interfaces web utilizando JavaScript y React, con atención al rendimiento, accesibilidad y experiencia de usuario.",
-      icon: "⚡"
+      icon: (
+        <svg className="w-6 h-6 stroke-[var(--cyan-link)]" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg>
+      )
     },
     {
       title: "Backend y Seguridad",
       desc: "Desarrollo de lógica de servidor, autenticación y gestión de datos, aplicando buenas prácticas para construir aplicaciones seguras y mantenibles.",
-      icon: "🛡️"
+      icon: (
+        <svg className="w-6 h-6 stroke-[#D03B13]" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      )
     }
   ];
 
   return (
-    <section id="about-me" className="py-24 px-6 max-w-6xl mx-auto">
-        {/* Fondo con efecto de luz alargada y transición estilizada entre secciones */}
-        <div className="absolute inset-0 flex justify-center items-center pointer-events-none overflow-hidden">
-        
-        {/* Óvalo vertical central (Luz principal de arriba a abajo) */}
-        <div className="w-[380px] sm:w-[500px] h-[110%] bg-gradient-to-b from-[#D03B13]/25 via-[var(--badge-text)]/20 to-[#D03B13]/25 dark:from-[#D03B13]/30 dark:via-cyan-500/20 dark:to-[#D03B13]/30 rounded-[50%] blur-[100px] transform scale-y-110" />
-
-        {/* Anillo de constricción / curva de reloj de arena en los extremos */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-transparent via-transparent to-[var(--bg-main)] opacity-80" />
-        </div>
+    <section id="about-me" className="relative py-18 px-6 max-w-6xl mx-auto">
+      
+      {/* Encabezado */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -37,17 +46,18 @@ export default function AboutMe() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="mb-16 text-center"
       >
-        <span className="text-xs font-bold tracking-wider uppercase px-4 py-1.5 rounded-full bg-[var(--badge-bg)] text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block">
+        <span className="text-xs font-bold tracking-wider uppercase px-4 py-1.5 rounded-full bg-[var(--badge-bg)]/80 backdrop-blur-md text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block shadow-xs">
           Conóceme
         </span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-4">
           ¿Quién soy yo?
         </h2>
         <p className="text-[var(--text-muted)] max-w-2xl mx-auto text-base font-normal leading-relaxed">
-            Estudiante de tecnología y desarrollador web interesado en convertir ideas en productos digitales funcionales, intuitivos y bien construidos.
+          Estudiante de tecnología y desarrollador web interesado en convertir ideas en productos digitales funcionales, intuitivos y bien construidos.
         </p>
       </motion.div>
 
+      {/* Tarjetas integradas con Glassmorphism y compatibilidad en modo claro */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
         {/* Texto Biográfico */}
@@ -56,25 +66,24 @@ export default function AboutMe() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-8 shadow-sm flex flex-col justify-between h-full"
+          className="lg:col-span-6 bg-[var(--bg-card)]/40 dark:bg-[var(--bg-card)]/50 backdrop-blur-xl border border-white/20 dark:border-white/10 ring-1 ring-black/5 dark:ring-white/5 rounded-2xl p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col justify-between h-full hover:border-[#D03B13]/30 transition-all duration-300"
         >
           <div>
             <h3 className="text-2xl font-bold text-[var(--text-main)] mb-4">
               Transformo ideas en soluciones digitales funcionales.
             </h3>
             <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-4">
-            Mi interés por la tecnología nació de la curiosidad por entender cómo funcionan las cosas y evolucionó hacia el desarrollo de proyectos donde programación, diseño y resolución de problemas trabajan juntos.
+              Mi interés por la tecnología nació de la curiosidad por entender cómo funcionan las cosas y evolucionó hacia el desarrollo de proyectos donde programación, diseño y resolución de problemas trabajan juntos.
             </p>
             <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-6">
-             Me gusta construir aplicaciones web que no solo funcionen, sino que sean claras, intuitivas y agradables de utilizar. He trabajado en proyectos que van desde interfaces y experiencias de usuario hasta sistemas con bases de datos, autenticación y lógica de backend.
+              Me gusta construir aplicaciones web que no solo funcionen, sino que sean claras, intuitivas y agradables de utilizar. He trabajado en proyectos que van desde interfaces y experiencias de usuario hasta sistemas con bases de datos, autenticación y lógica de backend.
             </p>
             <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-6">
-          Actualmente trabajo en proyectos de desarrollo web, UI/UX y backend, mientras continúo profundizando en arquitectura de software y seguridad.
+              Actualmente trabajo en proyectos de desarrollo web, UI/UX y backend, mientras continúo profundizando en arquitectura de software y seguridad.
             </p>
-
           </div>
 
-          <div className="pt-6 border-t border-[var(--border-color)] flex flex-wrap gap-4 items-center justify-between">
+          <div className="pt-6 border-t border-[var(--border-color)]/50 flex flex-wrap gap-4 items-center justify-between">
             <span className="text-xs font-mono font-bold text-[#D03B13] uppercase tracking-wider">
               Disponible para proyectos & colaboraciones
             </span>
@@ -87,7 +96,7 @@ export default function AboutMe() {
           </div>
         </motion.div>
 
-        {/* Tarjetas de Pilares/Aptitudes */}
+        {/* Tarjetas de Pilares / Aptitudes */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -98,9 +107,9 @@ export default function AboutMe() {
           {highlights.map((item, idx) => (
             <div 
               key={idx}
-              className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-6 hover:border-[var(--badge-text)] transition-colors duration-200 shadow-xs flex items-start gap-4"
+              className="bg-[var(--bg-card)]/40 dark:bg-[var(--bg-card)]/50 backdrop-blur-xl border border-white/20 dark:border-white/10 ring-1 ring-black/5 dark:ring-white/5 rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.25)] flex items-start gap-4 hover:border-white/40 dark:hover:border-white/20 transition-all duration-300 group"
             >
-              <span className="text-2xl p-2.5 rounded-xl bg-[var(--badge-bg)] border border-[var(--badge-border)] shrink-0">
+              <span className="p-3 rounded-xl bg-[var(--badge-bg)]/60 backdrop-blur-md border border-[var(--badge-border)] shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 {item.icon}
               </span>
               <div>

@@ -7,10 +7,10 @@ html {
   scroll-behavior: smooth;
   /* Transición global para el cambio de tema */
   *, *::before, *::after {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 300ms;
-  transition-timing-function: ease-in-out;
-}
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+  }
 }
 
 @theme {
@@ -47,4 +47,43 @@ html.dark {
   --badge-text: #2BCFCE;
   --badge-border: rgba(43, 207, 206, 0.3);
   --cyan-link: #2BCFCE;
+}
+
+/* ========================================================= */
+/* CLASES GLOBALES DE GLASSMORPHISM                          */
+/* ========================================================= */
+@layer utilities {
+  .glass-card {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
+    outline: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  /* Adaptación precisa para modo oscuro (Efecto Cristal de la imagen) */
+  .dark .glass-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    outline: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Variante interactiva para tarjetas con respuesta al cursor */
+  .glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card-hover:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-color: rgba(208, 59, 19, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .dark .glass-card-hover:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
 }

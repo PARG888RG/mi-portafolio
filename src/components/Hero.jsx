@@ -6,12 +6,8 @@ export default function Hero() {
   const { github, email, linkedin } = personalInfo;
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center px-6 py-12 overflow-hidden bg-[var(--bg-main)]">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center px-6 py-12 bg-transparent">
       
-      {/* Resplandores ambientales invertidos para alinearse con la luz de la foto */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[700px] bg-[#D03B13]/15 dark:bg-[#D03B13]/20 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[700px] bg-cyan-500/15 dark:bg-cyan-400/20 rounded-full blur-[140px] pointer-events-none" />
-
       <div className="max-w-6xl w-full min-h-[85vh] relative flex flex-col lg:flex-row items-center justify-between z-10">
         
         {/* LADO IZQUIERDO: Designer */}
@@ -42,14 +38,12 @@ export default function Hero() {
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
 
-            {/* Iniciar Contacto + Iconos de Redes Sociales */}
             <div className="flex flex-col gap-3 items-center lg:items-start mt-2">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-[var(--cyan-link)]">
                 Iniciar Contacto
               </span>
 
               <div className="flex items-center gap-3.5">
-                {/* GitHub */}
                 {github && (
                   <a
                     href={github} 
@@ -64,7 +58,6 @@ export default function Hero() {
                   </a>
                 )}
 
-                {/* Correo */}
                 {email && (
                   <a
                     href={`mailto:${email}`}
@@ -77,7 +70,6 @@ export default function Hero() {
                   </a>
                 )}
 
-                {/* LinkedIn */}
                 {linkedin && (
                   <a
                     href={linkedin}
@@ -96,7 +88,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* CENTRO: Foto principal */}
+        {/* CENTRO: Foto principal con la máscara original intacta */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
