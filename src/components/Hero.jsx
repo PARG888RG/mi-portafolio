@@ -17,7 +17,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="static lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 max-w-sm w-full text-center lg:text-left mt-6 lg:mt-0 pointer-events-auto"
         >
-          <span className="text-xs font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block">
+          <span className="text-xs font-mono font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] text-[var(--badge-text)] border border-[var(--badge-border)] mb-3 inline-block">
             UX/UI & Front-end
           </span>
           
