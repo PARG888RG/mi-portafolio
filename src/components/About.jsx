@@ -19,8 +19,8 @@ const getIconUrl = (skillName) => {
     "Google Cloud": { slug: "googlecloud", color: "4285F4" },
     "n8n": { slug: "n8n", color: "FF6584" },
     "JavaScript": { slug: "javascript", color: "F7DF1E" },
-    "C#": { slug: "csharp", color: "512BD4" },
-    "Java": { slug: "oracle", color: "F80000" },
+    "C#": { slug: "csharp", color: "239120" }, // O "dotnet" / "512BD4"
+    "Java": { slug: "openjdk", color: "ED8B00" }, // O "java" / "ED8B00"
     "React": { slug: "react", color: "61DAFB" },
     "HTML5 / CSS3": { slug: "html5", color: "E34F26" },
     "Figma": { slug: "figma", color: "F24E1E" },
@@ -38,8 +38,11 @@ const getIconUrl = (skillName) => {
 };
 
 export default function About() {
+  // Lista de habilidades cuyo logo es completamente negro y necesita invertirse en dark mode
+  const darkInvertSkills = ["Git / Github", "Git / GitHub", "WebSec"];
+
   return (
-    <section id="about" className="relative py-24 px-6 max-w-6xl mx-auto overflow-hidden">
+    <section id="about" className="relative py-18 px-6 max-w-6xl mx-auto overflow-hidden">
       
       {/* Encabezado */}
       <motion.div 
@@ -83,29 +86,35 @@ export default function About() {
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {group.skills.map((skill, idx) => (
-                <motion.div 
-                  key={idx}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className="flex items-center p-3.5 rounded-xl bg-[var(--bg-main)] border border-[var(--border-color)] hover:border-[#D03B13] transition-all group shadow-xs"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-900 flex items-center justify-center mr-3.5 border border-[var(--border-color)] shrink-0 p-2">
-                    <img 
-                      src={getIconUrl(skill)} 
-                      alt={skill} 
-                      className="w-full h-full object-contain"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23D03B13'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'/%3E%3C/svg%3E";
-                      }}
-                    />
-                  </div>
-                  <span className="text-sm font-bold text-[var(--text-main)] truncate">
-                    {skill}
-                  </span>
-                </motion.div>
-              ))}
+              {group.skills.map((skill, idx) => {
+                const isDarkIcon = darkInvertSkills.includes(skill);
+
+                return (
+                  <motion.div 
+                    key={idx}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="flex items-center p-3.5 rounded-xl bg-[var(--bg-main)] border border-[var(--border-color)] hover:border-[#D03B13] transition-all group shadow-xs"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center mr-3.5 border border-[var(--border-color)] shrink-0 p-2">
+                      <img 
+                        src={getIconUrl(skill)} 
+                        alt={skill} 
+                        className={`w-full h-full object-contain ${
+                          isDarkIcon ? 'dark:invert dark:brightness-200' : ''
+                        }`}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23D03B13'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'/%3E%3C/svg%3E";
+                        }}
+                      />
+                    </div>
+                    <span className="text-sm font-bold text-[var(--text-main)] truncate">
+                      {skill}
+                    </span>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         ))}
