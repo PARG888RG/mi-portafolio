@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
-/* Indicar a Tailwind v4 que la variante dark: se activa con la clase .dark */
 @variant dark (&:where(.dark, .dark *));
 
 html {
   scroll-behavior: smooth;
-  /* Transición global para el cambio de tema */
-  *, *::before, *::after {
-    transition-property: background-color, border-color, color, fill, stroke;
-    transition-duration: 300ms;
-    transition-timing-function: ease-in-out;
-  }
+}
+
+html *, 
+html *::before, 
+html *::after {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
 }
 
 @theme {
@@ -19,22 +20,32 @@ html {
   --color-brand-dark: #121417;
 }
 
-/* Modo Claro Amigable con la Vista */
+/* ========================================================= */
+/* VARIABLES DE TEMA                                         */
+/* ========================================================= */
+
+/* Modo Claro Exagerado estilo "Frosted Glass" */
 :root {
-  --bg-main: #F3F4F6;
+  --bg-main: #E5E7EB;               /* Un fondo ligeramente más contrastado para resaltar el cristal */
   --bg-card: #FFFFFF;
   --text-main: #111827;
-  --text-muted: #4B5563;
+  --text-muted: #374151;
   --border-color: #D1D5DB;
-  
-  /* Colores cian/celeste totalmente legibles en claro */
+
   --badge-bg: #E6F4F4;
   --badge-text: #08605F;
   --badge-border: #99D5D3;
   --cyan-link: #075958;
+
+  /* Glassmorphism Ultra Marcado */
+  --glass-bg: rgba(255, 255, 255, 0.18);          /* Relleno híper transparente */
+  --glass-bg-hover: rgba(255, 255, 255, 0.35);    
+  --glass-border: rgba(255, 255, 255, 0.85);      /* Borde de luz muy definido (bisel de cristal) */
+  --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 15px rgba(255, 255, 255, 0.5) inset; /* Sombra externa + brillo interno */
+  --glass-outline: rgba(0, 0, 0, 0.06);
 }
 
-/* Modo Oscuro */
+/* Modo Oscuro (Se mantiene igual) */
 html.dark {
   --bg-main: #0F1115;
   --bg-card: #1B1E24;
@@ -42,11 +53,16 @@ html.dark {
   --text-muted: #9CA3AF;
   --border-color: #374151;
 
-  /* Colores cian/celeste neón para fondo oscuro */
   --badge-bg: rgba(43, 207, 206, 0.15);
   --badge-text: #2BCFCE;
   --badge-border: rgba(43, 207, 206, 0.3);
   --cyan-link: #2BCFCE;
+
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-hover: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-outline: rgba(255, 255, 255, 0.05);
 }
 
 /* ========================================================= */
@@ -54,36 +70,28 @@ html.dark {
 /* ========================================================= */
 @layer utilities {
   .glass-card {
-    background-color: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
-    outline: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(25px) saturate(180%);     /* Blur alto + saturación para realzar lo que está detrás */
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1.5px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    outline: 1px solid var(--glass-outline);
   }
 
-  /* Adaptación precisa para modo oscuro (Efecto Cristal de la imagen) */
-  .dark .glass-card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    outline: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  /* Variante interactiva para tarjetas con respuesta al cursor */
   .glass-card-hover {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
   }
 
   .glass-card-hover:hover {
-    background-color: rgba(255, 255, 255, 0.6);
-    border-color: rgba(208, 59, 19, 0.3);
+    background-color: var(--glass-bg-hover);
+    border-color: var(--badge-border);
     transform: translateY(-2px);
   }
 
   .dark .glass-card-hover:hover {
-    background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
   }
 }
