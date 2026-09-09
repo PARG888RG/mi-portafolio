@@ -19,6 +19,7 @@ export default function Navbar() {
     { name: 'Sobre Mí', href: '#about-me' },
     { name: 'Proyectos', href: '#projects' },
     { name: 'Mi Stack', href: '#about' },
+    { name: 'Certificados', href: '#certificados' },
     { name: 'Contacto', href: '#contact' },
   ];
 
@@ -36,7 +37,7 @@ export default function Navbar() {
           href="#hero" 
           className="text-lg font-mono font-bold tracking-tight text-[var(--text-main)] hover:text-[#D03B13] transition-colors"
         >
-          pablo<span className="text-[#D03B13]">.dev</span>
+          parg<span className="text-[#D03B13]">.dev</span>
         </a>
 
         {/* Links Escritorio */}
