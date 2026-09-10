@@ -71,7 +71,7 @@ export default function Projects() {
     return containerWidth / 2 - cardCenter;
   };
 
-  const scrollToDistance = (index, duration = 0.45, onCompleteCallback) => {
+  const scrollToDistance = (index, duration = 0.25, onCompleteCallback) => {
     if (!containerRef.current) return;
     const targetX = getTargetX(index);
 
@@ -82,8 +82,8 @@ export default function Projects() {
       isAnimatingRef.current = true;
       animate(x, targetX, {
         type: 'spring',
-        stiffness: 260,
-        damping: 28,
+        stiffness: 400,
+        damping: 32,
         onComplete: () => {
           isAnimatingRef.current = false;
           if (onCompleteCallback) onCompleteCallback();
@@ -109,7 +109,7 @@ export default function Projects() {
     const nextIndex = currentIndex + 1;
     setCurrentIndex(nextIndex);
 
-    scrollToDistance(nextIndex, 0.45, () => {
+    scrollToDistance(nextIndex, 0.25, () => {
       if (nextIndex >= totalOriginal * 3.5) {
         const resetIndex = nextIndex - totalOriginal;
         setCurrentIndex(resetIndex);
@@ -124,13 +124,22 @@ export default function Projects() {
     const prevIndex = currentIndex - 1;
     setCurrentIndex(prevIndex);
 
-    scrollToDistance(prevIndex, 0.45, () => {
+    scrollToDistance(prevIndex, 0.25, () => {
       if (prevIndex <= totalOriginal * 1.5) {
         const resetIndex = prevIndex + totalOriginal;
         setCurrentIndex(resetIndex);
         x.set(getTargetX(resetIndex));
       }
     });
+  };
+
+  const handleDragEnd = (event, info) => {
+    const swipeThreshold = 40;
+    if (info.offset.x < -swipeThreshold) {
+      handleNext();
+    } else if (info.offset.x > swipeThreshold) {
+      handlePrev();
+    }
   };
 
   const activeDotIndex = ((currentIndex % totalOriginal) + totalOriginal) % totalOriginal;
@@ -176,9 +185,40 @@ export default function Projects() {
 
       {/* VISTA 1: Carrusel Infinito Real ('Todas') */}
       {selectedTag === 'Todas' ? (
-        <>
-          <div className="relative w-full overflow-hidden py-4" ref={containerRef}>
-            <motion.div style={{ x }} className="flex gap-4 sm:gap-5 lg:gap-6 items-center w-max">
+        <div className="relative w-full">
+          
+          {/* Botón Izquierda Flotante */}
+          <button
+            onClick={handlePrev}
+            aria-label="Proyecto anterior"
+            className="absolute -left-2 md:left-2 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full glass-card border border-[var(--border-color)] text-[var(--text-main)] hover:border-[#D03B13] hover:text-[#D03B13] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
+          >
+            <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Botón Derecha Flotante */}
+          <button
+            onClick={handleNext}
+            aria-label="Proyecto siguiente"
+            className="absolute -right-2 md:right-2 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full glass-card border border-[var(--border-color)] text-[var(--text-main)] hover:border-[#D03B13] hover:text-[#D03B13] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
+          >
+            <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Slider Arrastrable */}
+          <div className="relative w-full overflow-hidden py-4 touch-pan-y" ref={containerRef}>
+            <motion.div 
+              style={{ x }} 
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.1}
+              onDragEnd={handleDragEnd}
+              className="flex gap-4 sm:gap-5 lg:gap-6 items-center w-max cursor-grab active:cursor-grabbing"
+            >
               {extendedData.map((project, index) => {
                 const isCenter = index === currentIndex;
                 return (
@@ -187,7 +227,7 @@ export default function Projects() {
                     onClick={() => {
                       if (!isCenter && !isAnimatingRef.current) {
                         setCurrentIndex(index);
-                        scrollToDistance(index);
+                        scrollToDistance(index, 0.25);
                       }
                     }}
                     className={`w-[82vw] sm:w-[320px] lg:w-[360px] h-[410px] sm:h-[420px] shrink-0
@@ -205,15 +245,8 @@ export default function Projects() {
             </motion.div>
           </div>
 
-          <div className="flex items-center justify-between w-full max-w-sm mx-auto mt-8 z-40 px-2">
-            <button
-              onClick={handlePrev}
-              aria-label="Proyecto anterior"
-              className="w-10 h-10 rounded-full glass-card text-[var(--text-main)] flex items-center justify-center hover:border-[#D03B13] hover:text-[#D03B13] transition-colors shadow-md active:scale-95"
-            >
-              ←
-            </button>
-
+          {/* Indicadores en Puntos (Dots) */}
+          <div className="flex justify-center items-center gap-2 mt-6">
             <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
               {projectsData.map((_, idx) => (
                 <button
@@ -223,7 +256,7 @@ export default function Projects() {
                     const diff = idx - activeDotIndex;
                     const target = currentIndex + diff;
                     setCurrentIndex(target);
-                    scrollToDistance(target);
+                    scrollToDistance(target, 0.25);
                   }}
                   aria-label={`Ir al proyecto ${idx + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 ${
@@ -232,16 +265,9 @@ export default function Projects() {
                 />
               ))}
             </div>
-
-            <button
-              onClick={handleNext}
-              aria-label="Proyecto siguiente"
-              className="w-10 h-10 rounded-full glass-card text-[var(--text-main)] flex items-center justify-center hover:border-[#D03B13] hover:text-[#D03B13] transition-colors shadow-md active:scale-95"
-            >
-              →
-            </button>
           </div>
-        </>
+
+        </div>
       ) : (
         /* VISTA 2: Data Grid (Filtro Activo) */
         <AnimatePresence mode="wait">
@@ -283,6 +309,8 @@ function ProjectCardContent({ project, isCenter }) {
             </span>
           )}
         </div>
+
+        {/* Espacio reservado donde puedes incluir tu contenido extra (imagen, video o texto adicional) */}
         <div className="overflow-y-auto pr-1 custom-scrollbar flex-1">
           <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed font-normal">
             {project.description}
@@ -290,20 +318,21 @@ function ProjectCardContent({ project, isCenter }) {
         </div>
       </div>
 
-      <div className="mt-auto pt-4 shrink-0">
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+      <div className="mt-auto pt-3 shrink-0">
+        {/* Iconos limpios sin contenedor ni bordes */}
+        <div className="flex items-center gap-3 mb-3">
           {project.tags?.map((tag, idx) => (
-            <span 
-              key={idx} 
-              className="inline-flex items-center text-[11px] font-semibold px-2.5 py-1 bg-[var(--badge-bg)] text-[var(--badge-text)] rounded-lg border border-[var(--badge-border)] backdrop-blur-md"
-            >
-              <img src={getTagIconUrl(tag)} alt={tag} className="w-3 h-3 mr-1.5 object-contain" />
-              {tag}
-            </span>
+            <img 
+              key={idx}
+              src={getTagIconUrl(tag)} 
+              alt={tag} 
+              title={tag}
+              className="w-4 h-4 object-contain opacity-80 hover:opacity-100 transition-opacity duration-200" 
+            />
           ))}
         </div>
 
-        <div className="flex items-center gap-5 pt-3.5 border-t border-[var(--border-color)]">
+        <div className="flex items-center gap-5 pt-3 border-t border-[var(--border-color)]">
           {project.githubUrl && (
             <a 
               href={project.githubUrl} 
