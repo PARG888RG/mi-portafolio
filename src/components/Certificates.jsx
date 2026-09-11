@@ -400,8 +400,8 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
   return (
     <div className="h-full flex flex-col justify-between overflow-hidden">
       
-      {/* 1. Encabezado y Descripción */}
-      <div className="shrink-0 space-y-1.5">
+      {/* 1. Encabezado y Descripción (Fijo arriba) */}
+      <div className="shrink-0 space-y-1">
         <div className="flex justify-between items-start gap-2">
           <h3 className="text-base sm:text-lg font-bold text-[var(--text-main)] leading-tight line-clamp-1">
             {cert.title}
@@ -415,13 +415,13 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
           {cert.issuer}
         </p>
 
-        {/* Descripción compacta (2 líneas máximo) */}
+        {/* Descripción resguardada a máximo 2 líneas */}
         <p className="text-[var(--text-muted)] text-[11px] leading-snug font-normal line-clamp-2">
           {cert.description}
         </p>
       </div>
 
-      {/* 2. Imagen Agrandada (Ocupa el espacio central restante) */}
+      {/* 2. Área de Imagen (Ocupa todo el espacio central libre) */}
       <div className="flex-1 my-2 flex items-center justify-center min-h-0">
         {imageSrc ? (
           <div 
@@ -431,14 +431,16 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
                 onImageClick({ src: imageSrc, title: cert.title });
               }
             }}
-            className={`relative w-full h-full max-h-[190px] rounded-xl overflow-hidden group border border-[var(--border-color)] bg-black/40 backdrop-blur-sm shadow-md flex items-center justify-center ${
+            className={`relative w-full h-full max-h-[210px] rounded-xl overflow-hidden group border border-[var(--border-color)] bg-black/40 backdrop-blur-sm shadow-md flex items-center justify-center ${
               isCenter ? 'cursor-pointer' : ''
             }`}
           >
             <img 
               src={imageSrc} 
               alt={cert.title} 
-              className="w-full h-full object-contain p-1 transition-all duration-300 group-hover:scale-[1.02] select-none"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-contain p-1.5 transition-all duration-300 group-hover:scale-[1.02] select-none"
             />
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <span className="p-2 rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-md">
@@ -449,14 +451,14 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
             </div>
           </div>
         ) : (
-          <div className="w-full h-full max-h-[190px] rounded-xl border border-dashed border-white/20 bg-white/5 flex items-center justify-center text-xs text-[var(--text-muted)]">
+          <div className="w-full h-full max-h-[210px] rounded-xl border border-dashed border-white/20 bg-white/5 flex items-center justify-center text-xs text-[var(--text-muted)]">
             Sin imagen disponible
           </div>
         )}
       </div>
 
-      {/* 3. Badges y Footer */}
-      <div className="shrink-0 space-y-2 pt-1">
+      {/* 3. Badges y Pie de la tarjeta (Fijo abajo) */}
+      <div className="shrink-0 space-y-2">
         <div className="flex flex-wrap gap-1">
           {catList.map((cat, idx) => (
             <span 

@@ -9,7 +9,6 @@ export const personalInfo = {
   linkedinUser: "Pablo Rodas",
   discordUser: "PARG888RG GG",
   discordUserId: "1020107663658455140"
-
 };
 
 export const projectsData = [
@@ -20,23 +19,21 @@ export const projectsData = [
     tags: ["JavaScript", "Firebase", "UX Design", "HTML", "CSS", "MongoDB Atlas", "MySQL"],
     githubUrl: "https://github.com/PARG888RG/Proyecto-Juventud-2026",
   },
-
   {
     id: 2,
     title: "SwapTune",
-    description: "Aplicación web para descubrir nuevas canciones en función de gustos",
+    description: "Aplicación web para descubrir nuevas canciones en función de gustos.",
     tags: ["JavaScript", "MongoDB Atlas", "HTML", "CSS", "UX Design"],
     githubUrl: "https://github.com/PARG888RG/Proyecto-web-Juventud-2025"
   },
   {
     id: 3,
     title: "Medi Llegadas Backend",
-    description: "Sistema de registro de asistencia mediante código QR",
+    description: "Sistema de registro de asistencia mediante código QR.",
     tags: ["JavaScript", "Firebase"],
     githubUrl: "https://github.com/PARG888RG/Medi-Llegadas-Backend"
   }
 ];
-
 
 export const skillsData = [
   {
