@@ -76,10 +76,10 @@ export default function AboutMe() {
               Mi interés por la tecnología nació de la curiosidad por entender cómo funcionan las cosas y evolucionó hacia el desarrollo de proyectos donde programación, diseño y resolución de problemas trabajan juntos.
             </p>
             <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-6">
-              Me gusta construir aplicaciones web que no solo funcionen, sino que sean claras, intuitivas y agradables de utilizar. He trabajado en proyectos que van desde interfaces y experiencias de usuario hasta sistemas con bases de datos, autenticación y lógica de backend.
+              Me gusta construir aplicaciones que no solo funcionen, sino que sean claras, intuitivas y agradables de utilizar. He trabajado en proyectos que van desde interfaces y experiencias de usuario hasta sistemas con bases de datos, autenticación y lógica de backend.
             </p>
             <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-6">
-              Actualmente trabajo en proyectos de desarrollo web, UI/UX y backend, mientras continúo profundizando en arquitectura de software y seguridad.
+              Actualmente trabajo en proyectos de desarrollo, UI/UX y backend, mientras continúo profundizando en arquitectura de software y seguridad.
             </p>
           </div>
 

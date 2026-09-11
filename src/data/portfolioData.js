@@ -1,5 +1,5 @@
 export const personalInfo = {
-  name: "Pablo Antonio Rodas García",
+  name: "Pablo Rodas",
   role: "Desarrollador Frontend & Estudiante de Ciberseguridad",
   about: "Desarrollador enfocado en construir interfaces funcionales, limpias y eficientes. Me apasiona el desarrollo web moderno, la arquitectura de software y la seguridad informática.",
   github: "https://github.com/PARG888RG",

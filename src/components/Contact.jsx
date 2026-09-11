@@ -149,29 +149,6 @@ export default function Contact() {
         </motion.div>
 
       </div>
-
-      {/* Botón Alargado: Descargar CV */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 1, 0.5, 1] }}
-        className="mt-6"
-      >
-        <a
-          href={cvPath}
-          download
-          className="glass-card w-full rounded-2xl p-5 flex items-center justify-center gap-3 border border-[var(--border-color)] hover:border-[#D03B13] transition-all duration-300 group shadow-sm"
-        >
-          <svg className="w-5 h-5 text-[#D03B13] group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          <span className="text-base font-extrabold text-[var(--text-main)] group-hover:text-[#D03B13] transition-colors">
-            Descargar Currículum Vitae (PDF)
-          </span>
-        </a>
-      </motion.div>
-
       <footer className="mt-20 pt-8 border-t border-[var(--border-color)] text-center text-xs text-[var(--text-muted)] font-medium">
         © {new Date().getFullYear()} {personalInfo.name}. Desarrollado con React & Tailwind CSS.
       </footer>
