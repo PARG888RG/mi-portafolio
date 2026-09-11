@@ -5,7 +5,7 @@ export const personalInfo = {
   github: "https://github.com/PARG888RG",
   email: "pablitorodas2008@gmail.com",
   githubUser: "PARG888RG",
-  linkedin: "www.linkedin.com/in/pablo-rodas-21134b436",
+  linkedin: "https://www.linkedin.com/in/pablo-rodas-21134b436",
   linkedinUser: "Pablo Rodas",
   discordUser: "PARG888RG GG",
   discordUserId: "1020107663658455140"

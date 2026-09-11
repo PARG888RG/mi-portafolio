@@ -8,6 +8,7 @@ export default function Contact() {
   const discordUser = personalInfo.discordUser || "tu-usuario-discord";
   const discordUserId = personalInfo.discordUserId || "123456789012345678";
   const cvPath = personalInfo.cvUrl || "/CV.pdf";
+  const linkedinUrl = personalInfo.linkedin
 
   return (
     <section id="contact" className="py-18 px-6 max-w-5xl mx-auto border-t border-[var(--border-color)]">
@@ -99,13 +100,13 @@ export default function Contact() {
           <div className="pr-4">
             <span className="text-xs font-bold uppercase text-[var(--badge-text)] tracking-wider">LinkedIn</span>
             <p className="text-lg font-extrabold text-[var(--text-main)] mt-1">
-              LinkedIn Profile
+              {linkedinUser}
             </p>
             <p className="text-xs text-[var(--text-muted)] mt-1">Conectemos en el ámbito profesional.</p>
           </div>
 
           <a 
-            href={`https://linkedin.com/in/${linkedinUser}`}
+            href={linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
             title="Ver Perfil de LinkedIn"
