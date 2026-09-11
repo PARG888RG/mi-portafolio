@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, useMotionValue, animate, AnimatePresence } from 'framer-motion';
 import { projectsData } from '../data/portfolioData';
+import { getLocalIconUrl } from '../utils/iconUrl';
 
 const getTagIconUrl = (tag) => {
   const map = {
@@ -14,7 +15,7 @@ const getTagIconUrl = (tag) => {
     "React": "react"
   };
   const slug = map[tag] || "codeberg";
-  return `https://cdn.simpleicons.org/${slug}`;
+  return getLocalIconUrl(slug);
 };
 
 export default function Projects() {

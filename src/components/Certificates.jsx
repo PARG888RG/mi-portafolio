@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, useMotionValue, animate, AnimatePresence } from 'framer-motion';
 import { certificatesData } from '../data/portfolioData';
+import { getLocalIconUrl } from '../utils/iconUrl';
 
 // Mapeo de etiquetas a iconos
 const getTagIconUrl = (tag) => {
@@ -35,7 +36,7 @@ const getTagIconUrl = (tag) => {
 
   const key = (tag || '').toLowerCase().trim();
   const slug = map[key] || "codefactor";
-  return `https://cdn.simpleicons.org/${slug}/white`;
+  return getLocalIconUrl(slug, 'FFFFFF');
 };
 
 export default function Certificates() {

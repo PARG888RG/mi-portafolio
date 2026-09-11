@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { personalInfo, skillsData } from '../data/portfolioData';
+import { getLocalIconUrl } from '../utils/iconUrl';
 
 const getIconUrl = (skillName) => {
   const map = {
@@ -30,11 +31,11 @@ const getIconUrl = (skillName) => {
 
   const item = map[skillName];
   if (item) {
-    return `https://cdn.simpleicons.org/${item.slug}/${item.color}`;
+    return getLocalIconUrl(item.slug, item.color);
   }
 
   const cleanSlug = skillName.toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `https://cdn.simpleicons.org/${cleanSlug}`;
+  return getLocalIconUrl(cleanSlug);
 };
 
 export default function About() {
