@@ -2,20 +2,45 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, useMotionValue, animate, AnimatePresence } from 'framer-motion';
 import { certificatesData } from '../data/portfolioData';
 
+// Mapeo completo de etiquetas a slugs reales de Simple Icons
 const getTagIconUrl = (tag) => {
   const map = {
-    "Cisco": "cisco",
-    "Google": "google",
-    "Coursera": "coursera",
-    "Hack The Box": "hackthebox",
-    "JavaScript": "javascript",
-    "UX Design": "figma",
-    "Cybersecurity": "kalilinux",
-    "React": "react",
-    "Web Development": "html5"
+    // Categorías visualizadas en tu interfaz
+    "inteligencia artificial": "openai",
+    "ia": "openai",
+    "ux / ui": "figma",
+    "ux design": "figma",
+    "diseño web": "html5",
+    "web development": "html5",
+    "linux": "linux",
+    "sistemas": "archlinux",
+    "cloud": "googlecloud",
+    "productividad": "notion",
+    "redes": "cisco",
+    "hardware": "intel",
+    "ciberseguridad": "kalilinux",
+    "cybersecurity": "kalilinux",
+
+    // Marcas, Proveedores y Tecnologías
+    "cisco": "cisco",
+    "google": "google",
+    "coursera": "coursera",
+    "hack the box": "hackthebox",
+    "microsoft": "microsoft",
+    "javascript": "javascript",
+    "react": "react",
+    "html": "html5",
+    "css": "css3",
+    "python": "python",
+    "node.js": "nodedotjs",
+    "node": "nodedotjs"
   };
-  const slug = map[tag] || "codeberg";
-  return `https://cdn.simpleicons.org/${slug}`;
+
+  const key = (tag || '').toLowerCase().trim();
+  // Usa "codefactor" como icono por defecto en vez de codeberg cuando no hay coincidencia
+  const slug = map[key] || "codefactor";
+  
+  return `https://cdn.simpleicons.org/${slug}/white`;
 };
 
 export default function Certificates() {
@@ -145,7 +170,6 @@ export default function Certificates() {
     });
   };
 
-  // Manejador del gesto táctil (Swipe) para dispositivos móviles
   const handleDragEnd = (event, info) => {
     const swipeThreshold = 40;
     if (info.offset.x < -swipeThreshold) {
@@ -345,7 +369,16 @@ function CertCardContent({ cert, isCenter }) {
               key={idx} 
               className="inline-flex items-center text-[11px] font-semibold px-2.5 py-1 bg-[var(--badge-bg)] text-[var(--badge-text)] rounded-lg border border-[var(--badge-border)] backdrop-blur-md"
             >
-              <img src={getTagIconUrl(cat)} alt={cat} className="w-3 h-3 mr-1.5 object-contain" />
+              <img 
+                src={getTagIconUrl(cat)} 
+                alt="" 
+                className="w-3.5 h-3.5 mr-1.5 object-contain opacity-90 shrink-0"
+                onError={(e) => {
+                  // Muestra un SVG de código estándar en color blanco si falla la red
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' /%3E%3C/svg%3E";
+                }}
+              />
               {cat}
             </span>
           ))}
