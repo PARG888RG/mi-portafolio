@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import heroAvatar from '../assets/hero-avatar.png';
+import heroAvatar from '../assets/hero-avatar.webp';
 import { personalInfo } from '../data/portfolioData';
 
 export default function Hero() {
