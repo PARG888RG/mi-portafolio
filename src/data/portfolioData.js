@@ -63,7 +63,7 @@ export const certificatesData = [
     categories: ["Inteligencia Artificial", "Cloud"],
     description: "Implementación de agentes de IA, Gems, técnicas de Prompting y seguridad estratégica en organizaciones.",
     link: "https://coursera.org/share/b3c5b7305c803827cf7b471f304dc77d",
-    image: "/certificates/Generative_AI.jpg"
+    image: "/certificates/generative-ai.jpg"
   },
   {
     id: 2,
@@ -73,7 +73,7 @@ export const certificatesData = [
     categories: ["Inteligencia Artificial", "Productividad"],
     description: "Diseño y estructuración de prompts efectivos para optimizar modelos de IA Generativa en flujos de trabajo.",
     link: "https://coursera.org/share/cd1c5834e0e879d0c6a9f1d59654f1a0",
-    image: "/certificates/Propmting_Essentials.jpg"
+    image: "/certificates/prompting-essentials.jpg"
   },
   {
     id: 3,
@@ -83,7 +83,7 @@ export const certificatesData = [
     categories: ["Inteligencia Artificial"],
     description: "Habilidades prácticas en el uso responsable y eficiente de herramientas de Inteligencia Artificial.",
     link: "https://coursera.org/share/b18fe1a0a548379f0956de9a4e2b4d8d",
-    image: "/certificates/AI_Essentials.jpg"
+    image: "/certificates/ai-essentials.jpg"
   },
   {
     id: 4,
@@ -93,7 +93,7 @@ export const certificatesData = [
     categories: ["UX / UI", "Diseño Web"],
     description: "Diseño de interfaces, prototipado e investigación de usuarios para experiencias digitales intuitivas.",
     link: "https://coursera.org/share/c3a787ef2ccaab428f6389f8d0744867",
-    image: "/certificates/UX.jpg"
+    image: "/certificates/ux.jpg"
   },
   {
     id: 5,
@@ -103,7 +103,7 @@ export const certificatesData = [
     categories: ["Soporte IT", "Hardware", "Redes"],
     description: "Hardware, software, mantenimiento de sistemas, redes y ciberseguridad para soporte técnico.",
     link: "https://www.credly.com/badges/889da5d8-9df8-4732-89fd-a81189e2b474/public_url",
-    image: "/certificates/IT_Essentials.jpg"
+    image: "/certificates/it-essentials.jpg"
   },
   {
     id: 6,
@@ -113,7 +113,7 @@ export const certificatesData = [
     categories: ["Redes", "Sistemas"],
     description: "Configuración de routers y switches Cisco, direccionamiento IPv4/IPv6 y diagnóstico de conectividad.",
     link: "https://www.credly.com/badges/3942eef3-1c92-4e93-a0d8-1cfc352ef475/public_url",
-    image: "/certificates/CCNA_IN.jpg"
+    image: "/certificates/ccna-in.jpg"
   },
   {
     id: 7,
@@ -123,7 +123,7 @@ export const certificatesData = [
     categories: ["Cloud", "Redes", "Sistemas"],
     description: "Despliegue de servicios esenciales de cómputo, almacenamiento y redes bajo arquitectura AWS.",
     link: "https://www.credly.com/badges/72287ff7-3032-47cd-80c6-05e0b3ea6b66/public_url",
-    image: "/certificates/Cloud_Foundations.jpg"
+    image: "/certificates/cloud-foundations.jpg"
   },
   {
     id: 8,
@@ -133,7 +133,7 @@ export const certificatesData = [
     categories: ["Ciberseguridad", "Redes"],
     description: "Identificación de vulnerabilidades, mitigación de amenazas y protección de datos e integridad operacional.",
     link: "https://www.credly.com/badges/98db7ba9-d390-493f-be23-2612904bbf31/public_url",
-    image: "/certificates/Introduction_Cibersecurity.jpg"
+    image: "/certificates/introduction-cybersecurity.jpg"
   },
   {
     id: 9,
@@ -143,6 +143,6 @@ export const certificatesData = [
     categories: ["Linux", "Sistemas"],
     description: "Navegación e interacción con la línea de comandos Bash, gestión de archivos y permisos en Linux.",
     link: "https://www.credly.com/badges/6e1bacae-005e-4a47-bbc4-3c01032864b7/public_url",
-    image: "/certificates/Linux_Unhatched.jpg"
+    image: "/certificates/linux-unhatched.jpg"
   }
 ];

@@ -400,7 +400,7 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
   return (
     <div className="h-full flex flex-col justify-between overflow-hidden">
       
-      {/* 1. Encabezado y Descripción (Fijo arriba) */}
+      {/* 1. Encabezado y Descripción */}
       <div className="shrink-0 space-y-1">
         <div className="flex justify-between items-start gap-2">
           <h3 className="text-base sm:text-lg font-bold text-[var(--text-main)] leading-tight line-clamp-1">
@@ -415,13 +415,12 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
           {cert.issuer}
         </p>
 
-        {/* Descripción resguardada a máximo 2 líneas */}
         <p className="text-[var(--text-muted)] text-[11px] leading-snug font-normal line-clamp-2">
           {cert.description}
         </p>
       </div>
 
-      {/* 2. Área de Imagen (Ocupa todo el espacio central libre) */}
+      {/* 2. Área Central de la Imagen */}
       <div className="flex-1 my-2 flex items-center justify-center min-h-0">
         {imageSrc ? (
           <div 
@@ -440,6 +439,10 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
               alt={cert.title} 
               loading="lazy"
               decoding="async"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.style.display = 'none';
+              }}
               className="w-full h-full object-contain p-1.5 transition-all duration-300 group-hover:scale-[1.02] select-none"
             />
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -457,24 +460,31 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
         )}
       </div>
 
-      {/* 3. Badges y Pie de la tarjeta (Fijo abajo) */}
+      {/* 3. Badges e Iconos */}
       <div className="shrink-0 space-y-2">
         <div className="flex flex-wrap gap-1">
-          {catList.map((cat, idx) => (
-            <span 
-              key={idx} 
-              className="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 bg-[var(--badge-bg)] text-[var(--badge-text)] rounded-lg border border-[var(--badge-border)] backdrop-blur-md"
-            >
-              <img 
-                src={getTagIconUrl(cat)} 
-                alt="" 
-                className="w-3 h-3 mr-1 object-contain opacity-90 shrink-0"
-              />
-              {cat}
-            </span>
-          ))}
+          {catList.map((cat, idx) => {
+            const iconUrl = typeof getTagIconUrl === 'function' ? getTagIconUrl(cat) : null;
+            return (
+              <span 
+                key={idx} 
+                className="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 bg-[var(--badge-bg)] text-[var(--badge-text)] rounded-lg border border-[var(--badge-border)] backdrop-blur-md"
+              >
+                {iconUrl && (
+                  <img 
+                    src={iconUrl} 
+                    alt="" 
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                    className="w-3 h-3 mr-1 object-contain opacity-90 shrink-0"
+                  />
+                )}
+                {cat}
+              </span>
+            );
+          })}
         </div>
 
+        {/* Footer */}
         <div className="flex items-center justify-between pt-2 border-t border-[var(--border-color)]">
           {cert.link ? (
             <a 
