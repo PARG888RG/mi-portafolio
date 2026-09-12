@@ -3,7 +3,6 @@ import { motion, useMotionValue, animate, AnimatePresence } from 'framer-motion'
 import { certificatesData } from '../data/portfolioData';
 import { getLocalIconUrl } from '../utils/iconUrl';
 
-// Mapeo de etiquetas a iconos
 const getTagIconUrl = (tag) => {
   const map = {
     "inteligencia artificial": "openai",
@@ -43,6 +42,18 @@ export default function Certificates() {
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const totalOriginal = certificatesData.length;
+  // Triplicamos el array para el efecto infinito
+  const carouselItems = useMemo(() => {
+    return [...certificatesData, ...certificatesData, ...certificatesData];
+  }, []);
+
+  // Empezamos en el set del medio
+  const [currentIndex, setCurrentIndex] = useState(totalOriginal);
+  const isAnimatingRef = useRef(false);
+  const x = useMotionValue(0);
+  const containerRef = useRef(null);
+
   const categories = useMemo(() => {
     const cats = new Set();
     certificatesData.forEach((cert) => {
@@ -64,21 +75,6 @@ export default function Certificates() {
       return cert.category === selectedCategory;
     });
   }, [selectedCategory]);
-
-  const totalOriginal = certificatesData.length;
-
-  const extendedData = useMemo(() => [
-    ...certificatesData,
-    ...certificatesData,
-    ...certificatesData,
-    ...certificatesData,
-    ...certificatesData
-  ], [totalOriginal]);
-
-  const [currentIndex, setCurrentIndex] = useState(totalOriginal * 2);
-  const isAnimatingRef = useRef(false);
-  const x = useMotionValue(0);
-  const containerRef = useRef(null);
 
   const getCardWidth = () => {
     if (typeof window === 'undefined') return 360;
@@ -105,19 +101,21 @@ export default function Certificates() {
     return containerWidth / 2 - cardCenter;
   };
 
-  const scrollToDistance = (index, duration = 0.45, onCompleteCallback) => {
+  // AQUÍ ESTÁ LA MAGIA CORREGIDA
+  const scrollToDistance = (index, duration = 0.35, onCompleteCallback) => {
     if (!containerRef.current) return;
     const targetX = getTargetX(index);
 
     if (duration === 0) {
+      x.stop();
       x.set(targetX);
+      isAnimatingRef.current = false;
       if (onCompleteCallback) onCompleteCallback();
     } else {
       isAnimatingRef.current = true;
       animate(x, targetX, {
-        type: 'spring',
-        stiffness: 400,
-        damping: 32,
+        duration,
+        ease: [0.25, 1, 0.5, 1], // easeOutQuart sin rebote
         onComplete: () => {
           isAnimatingRef.current = false;
           if (onCompleteCallback) onCompleteCallback();
@@ -126,65 +124,47 @@ export default function Certificates() {
     }
   };
 
+  const checkLoopReset = (index) => {
+    if (index >= totalOriginal * 2) {
+      const resetIndex = index - totalOriginal;
+      setCurrentIndex(resetIndex);
+      scrollToDistance(resetIndex, 0);
+    } else if (index < totalOriginal) {
+      const resetIndex = index + totalOriginal;
+      setCurrentIndex(resetIndex);
+      scrollToDistance(resetIndex, 0);
+    }
+  };
+
   useEffect(() => {
     if (selectedCategory === 'Todas') {
-      scrollToDistance(currentIndex, 0);
+      setCurrentIndex(totalOriginal);
+      scrollToDistance(totalOriginal, 0);
     }
     const handleResize = () => {
-      if (selectedCategory === 'Todas') scrollToDistance(currentIndex, 0);
+      if (selectedCategory === 'Todas') {
+        scrollToDistance(currentIndex, 0);
+      }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [selectedCategory, currentIndex]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setSelectedImage(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [selectedCategory, totalOriginal]);
 
   const handleNext = () => {
-    if (isAnimatingRef.current || selectedCategory !== 'Todas') return;
-
+    if (selectedCategory !== 'Todas' || isAnimatingRef.current) return;
     const nextIndex = currentIndex + 1;
     setCurrentIndex(nextIndex);
-
-    scrollToDistance(nextIndex, 0.45, () => {
-      if (nextIndex >= totalOriginal * 3.5) {
-        const resetIndex = nextIndex - totalOriginal;
-        setCurrentIndex(resetIndex);
-        x.set(getTargetX(resetIndex));
-      }
-    });
+    scrollToDistance(nextIndex, 0.35, () => checkLoopReset(nextIndex));
   };
 
   const handlePrev = () => {
-    if (isAnimatingRef.current || selectedCategory !== 'Todas') return;
-
+    if (selectedCategory !== 'Todas' || isAnimatingRef.current) return;
     const prevIndex = currentIndex - 1;
     setCurrentIndex(prevIndex);
-
-    scrollToDistance(prevIndex, 0.45, () => {
-      if (prevIndex <= totalOriginal * 1.5) {
-        const resetIndex = prevIndex + totalOriginal;
-        setCurrentIndex(resetIndex);
-        x.set(getTargetX(resetIndex));
-      }
-    });
+    scrollToDistance(prevIndex, 0.35, () => checkLoopReset(prevIndex));
   };
 
-  const handleDragEnd = (event, info) => {
-    const swipeThreshold = 40;
-    if (info.offset.x < -swipeThreshold) {
-      handleNext();
-    } else if (info.offset.x > swipeThreshold) {
-      handlePrev();
-    }
-  };
-
-  const activeDotIndex = ((currentIndex % totalOriginal) + totalOriginal) % totalOriginal;
+  const activeDotIndex = currentIndex % totalOriginal;
 
   return (
     <section id="certificados" className="py-18 px-4 max-w-7xl mx-auto overflow-hidden relative scroll-mt-16 select-none">
@@ -225,14 +205,14 @@ export default function Certificates() {
         </div>
       </motion.div>
 
-      {/* Carrusel / Grid */}
+      {/* Carrusel Infinito */}
       {selectedCategory === 'Todas' ? (
         <div className="relative w-full">
           
           <button
             onClick={handlePrev}
             aria-label="Certificado anterior"
-            className="absolute -left-2 md:left-2 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full glass-card border border-[var(--border-color)] text-[var(--text-main)] hover:border-[#D03B13] hover:text-[#D03B13] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
+            className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full glass-card border border-[var(--border-color)] text-[var(--text-main)] hover:border-[#D03B13] hover:text-[#D03B13] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
           >
             <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -242,39 +222,36 @@ export default function Certificates() {
           <button
             onClick={handleNext}
             aria-label="Certificado siguiente"
-            className="absolute -right-2 md:right-2 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full glass-card border border-[var(--border-color)] text-[var(--text-main)] hover:border-[#D03B13] hover:text-[#D03B13] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
+            className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full glass-card border border-[var(--border-color)] text-[var(--text-main)] hover:border-[#D03B13] hover:text-[#D03B13] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg"
           >
             <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
 
-          <div className="relative w-full overflow-hidden py-4 touch-pan-y" ref={containerRef}>
+          <div className="relative w-full overflow-hidden py-8" ref={containerRef}>
             <motion.div 
               style={{ x }} 
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.1}
-              onDragEnd={handleDragEnd}
-              className="flex gap-4 sm:gap-5 lg:gap-6 items-center w-max cursor-grab active:cursor-grabbing"
+              className="flex gap-4 sm:gap-5 lg:gap-6 items-center w-max"
             >
-              {extendedData.map((cert, index) => {
+              {carouselItems.map((cert, index) => {
                 const isCenter = index === currentIndex;
+                
                 return (
                   <article
-                    key={`${cert.id || index}-${index}`}
+                    key={index}
                     onClick={() => {
                       if (!isCenter && !isAnimatingRef.current) {
                         setCurrentIndex(index);
-                        scrollToDistance(index);
+                        scrollToDistance(index, 0.35, () => checkLoopReset(index));
                       }
                     }}
                     className={`w-[82vw] sm:w-[320px] lg:w-[360px] h-[520px] shrink-0
                       glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between 
-                      transition-all duration-300 overflow-hidden ${
+                      transition-all duration-300 transform-gpu ${
                       isCenter 
-                        ? 'border-[var(--badge-border)] shadow-2xl opacity-100 scale-100 cursor-default' 
-                        : 'border-transparent opacity-40 scale-95 hover:opacity-75 cursor-pointer'
+                        ? 'border-[var(--badge-border)] shadow-2xl cursor-default scale-100 opacity-100' 
+                        : 'border-transparent cursor-pointer scale-95 opacity-40 hover:opacity-70'
                     }`}
                   >
                     <CertCardContent 
@@ -288,23 +265,24 @@ export default function Certificates() {
             </motion.div>
           </div>
 
-          <div className="flex justify-center items-center gap-2 mt-6">
-            <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+          {/* Dots */}
+          <div className="flex justify-center items-center gap-2 mt-4">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--badge-bg)] border border-[var(--badge-border)] backdrop-blur-md">
               {certificatesData.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => {
                     if (isAnimatingRef.current) return;
-                    const diff = idx - activeDotIndex;
-                    const target = currentIndex + diff;
+                    // Mapeamos el dot al set del medio
+                    const target = totalOriginal + idx;
                     setCurrentIndex(target);
-                    scrollToDistance(target);
+                    scrollToDistance(target, 0.35);
                   }}
                   aria-label={`Ir al certificado ${idx + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     activeDotIndex === idx 
                       ? 'w-6 bg-[#D03B13] shadow-sm' 
-                      : 'w-2 bg-white/20 hover:bg-white/40'
+                      : 'w-2 bg-[var(--text-main)] opacity-25 hover:opacity-50'
                   }`}
                 />
               ))}
@@ -360,7 +338,6 @@ export default function Certificates() {
               <button
                 onClick={() => setSelectedImage(null)}
                 className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/75 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-transform active:scale-90"
-                aria-label="Cerrar vista previa"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
@@ -374,19 +351,10 @@ export default function Certificates() {
                   className="w-auto h-auto max-w-full max-h-[60vh] object-contain rounded-xl select-none"
                 />
               </div>
-
-              {selectedImage.title && (
-                <div className="w-full py-2 px-4 text-center border-t border-white/10 bg-black/30 rounded-b-2xl">
-                  <p className="text-sm font-semibold text-[var(--text-main)] truncate">
-                    {selectedImage.title}
-                  </p>
-                </div>
-              )}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   );
 }
@@ -400,8 +368,6 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
 
   return (
     <div className="h-full flex flex-col justify-between overflow-hidden">
-      
-      {/* 1. Encabezado y Descripción */}
       <div className="shrink-0 space-y-1">
         <div className="flex justify-between items-start gap-2">
           <h3 className="text-base sm:text-lg font-bold text-[var(--text-main)] leading-tight line-clamp-1">
@@ -421,7 +387,6 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
         </p>
       </div>
 
-      {/* 2. Área Central de la Imagen */}
       <div className="flex-1 my-2 flex items-center justify-center min-h-0">
         {imageSrc ? (
           <div 
@@ -446,13 +411,6 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
               }}
               className="w-full h-full object-contain p-1.5 transition-all duration-300 group-hover:scale-[1.02] select-none"
             />
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <span className="p-2 rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-md">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                </svg>
-              </span>
-            </div>
           </div>
         ) : (
           <div className="w-full h-full max-h-[210px] rounded-xl border border-dashed border-white/20 bg-white/5 flex items-center justify-center text-xs text-[var(--text-muted)]">
@@ -461,7 +419,6 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
         )}
       </div>
 
-      {/* 3. Badges e Iconos */}
       <div className="shrink-0 space-y-2">
         <div className="flex flex-wrap gap-1">
           {catList.map((cat, idx) => {
@@ -476,7 +433,7 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
                     src={iconUrl} 
                     alt="" 
                     onError={(e) => { e.target.style.display = 'none'; }}
-                    className="w-3 h-3 mr-1 object-contain opacity-90 shrink-0"
+                    className="w-3 h-3 mr-1 object-contain dark:invert-0 invert transition-all duration-300 shrink-0 opacity-80"
                   />
                 )}
                 {cat}
@@ -485,7 +442,6 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
           })}
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-between pt-2 border-t border-[var(--border-color)]">
           {cert.link ? (
             <a 
@@ -514,7 +470,6 @@ function CertCardContent({ cert, isCenter, onImageClick }) {
           </button>
         </div>
       </div>
-
     </div>
   );
 }
